@@ -7,8 +7,8 @@ let isAnimating = false;
 let detailsPanelOpen = false;
 
 // DOM Elements
-const welcomeScreen = document.getElementById('welcomeScreen');
-const startPresentationBtn = document.getElementById('startPresentationBtn');
+// const welcomeScreen = document.getElementById('welcomeScreen'); // Removido
+// const startPresentationBtn = document.getElementById('startPresentationBtn'); // Removido
 const slides = document.querySelectorAll('.slide');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -26,37 +26,22 @@ const detailsContent = document.getElementById('detailsContent');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    attachWelcomeScreenListeners();
+    // Funções da Welcome Screen removidas
     updateClock();
     setInterval(updateClock, 1000);
     logWelcomeMessage();
+    
+    // Inicializa a apresentação e os listeners do desktop
+    initializePresentation();
+    attachEventListeners();
+    addWindowDragFunctionality();
 });
 
-// Welcome Screen Listeners
-function attachWelcomeScreenListeners() {
-    startPresentationBtn.addEventListener('click', startPresentation);
-    welcomeScreen.addEventListener('click', (e) => {
-        if (e.target === welcomeScreen) {
-            startPresentation();
-        }
-    });
-    document.addEventListener('keydown', (e) => {
-        if (!welcomeScreen.classList.contains('hidden') && e.key === 'Enter') {
-            startPresentation();
-        }
-    });
-}
+// Welcome Screen Listeners (Removidos)
+// function attachWelcomeScreenListeners() { ... }
 
-// Start Presentation
-function startPresentation() {
-    welcomeScreen.classList.add('hidden');
-    setTimeout(() => {
-        welcomeScreen.style.display = 'none';
-        initializePresentation();
-        attachEventListeners();
-        addWindowDragFunctionality();
-    }, 500);
-}
+// Start Presentation (Removido)
+// function startPresentation() { ... }
 
 // Initialize Presentation
 function initializePresentation() {
@@ -84,6 +69,9 @@ function attachEventListeners() {
     document.querySelector('.minimize-btn').addEventListener('click', minimizeWindow);
     document.querySelector('.maximize-btn').addEventListener('click', maximizeWindow);
 
+    // NOVO: Listener para o item da barra de tarefas
+    document.getElementById('taskbarApp').addEventListener('click', minimizeWindow);
+
     // Desktop shortcuts
     const desktopShortcuts = document.querySelectorAll('.desktop-shortcut');
     desktopShortcuts.forEach((shortcut, index) => {
@@ -96,6 +84,9 @@ function attachEventListeners() {
 // Handle Keyboard Press
 function handleKeyPress(event) {
     if (isAnimating) return;
+
+    // Não processa teclas se a janela principal estiver escondida
+    if (mainWindow.style.display === 'none') return;
 
     switch (event.key.toLowerCase()) {
         case 'arrowleft':
@@ -246,15 +237,28 @@ function closePresentation() {
     if (confirm('Deseja realmente encerrar a apresentação?')) {
         alert('Obrigado por assistir! 🎉');
         mainWindow.style.opacity = '0';
-        mainWindow.style.transform = 'scale(0.8)';
+        mainWindow.style.transform = 'translate(-50%, -50%) scale(0.8)';
         setTimeout(() => {
             mainWindow.style.display = 'none';
         }, 300);
     }
 }
 
+// Esta função agora abre e fecha a janela (usada pelo botão minimizar E pelo item da barra de tarefas)
 function minimizeWindow() {
-    mainWindow.style.display = mainWindow.style.display === 'none' ? 'flex' : 'none';
+    const isHidden = mainWindow.style.display === 'none';
+    if (isHidden) {
+        mainWindow.style.display = 'flex';
+        // Força a re-aplicação da animação de "aparecer"
+        mainWindow.style.animation = 'none';
+        setTimeout(() => {
+            mainWindow.style.animation = 'windowAppear 0.3s ease-out';
+            mainWindow.style.opacity = '1';
+            mainWindow.style.transform = 'translate(-50%, -50%) scale(1)';
+        }, 10);
+    } else {
+        mainWindow.style.display = 'none';
+    }
 }
 
 function maximizeWindow() {
@@ -288,6 +292,10 @@ function addWindowDragFunctionality() {
     let initialY;
 
     titleBar.addEventListener('mousedown', (e) => {
+        // Não arrasta se a janela estiver maximizada
+        if (mainWindow.style.width === '100vw') {
+            return;
+        }
         isDragging = true;
         initialX = e.clientX - mainWindow.offsetLeft;
         initialY = e.clientY - mainWindow.offsetTop;
@@ -297,10 +305,10 @@ function addWindowDragFunctionality() {
         if (isDragging) {
             currentX = e.clientX - initialX;
             currentY = e.clientY - initialY;
-            mainWindow.style.position = 'fixed';
+            mainWindow.style.position = 'fixed'; // Garante que é 'fixed'
             mainWindow.style.left = currentX + 'px';
             mainWindow.style.top = currentY + 'px';
-            mainWindow.style.transform = 'none';
+            mainWindow.style.transform = 'none'; // Remove o 'translate'
         }
     });
 
@@ -322,6 +330,9 @@ function handleDesktopShortcut(index) {
 
 // Keyboard Shortcuts for Slide Navigation
 document.addEventListener('keydown', (event) => {
+    // Não processa teclas se a janela principal estiver escondida
+    if (mainWindow.style.display === 'none') return;
+    
     // Number keys to jump to slide
     if (event.key >= '1' && event.key <= '9') {
         const slideNum = parseInt(event.key);
@@ -345,6 +356,7 @@ document.addEventListener('touchend', (event) => {
 });
 
 function handleSwipe() {
+    if (mainWindow.style.display === 'none') return; // Não faz swipe se a janela estiver fechada
     if (touchEndX < touchStartX - 50) {
         nextSlide();
     } else if (touchEndX > touchStartX + 50) {
@@ -495,8 +507,9 @@ function logWelcomeMessage() {
     console.log('%c╔════════════════════════════════════════════════════════════╗', 'color: #1084d7; font-weight: bold;');
     console.log('%c║  🖥️  OS INOVADORES - CAPÍTULO 9: SOFTWARE  🖥️             ║', 'color: #1084d7; font-weight: bold;');
     console.log('%c╚════════════════════════════════════════════════════════════╝', 'color: #1084d7; font-weight: bold;');
-    console.log('%c\n📚 Apresentação iniciada com sucesso!\n', 'color: #00ff00; font-size: 12px; font-weight: bold;');
-    console.log('%c⌨️  CONTROLES DE NAVEGAÇÃO:', 'color: #ffff00; font-weight: bold;');
+    console.log('%c\n📚 Desktop carregado com sucesso!\n', 'color: #00ff00; font-size: 12px; font-weight: bold;');
+    console.log('%c🖱️  Clique em "📊 Apresentação" na barra de tarefas para começar.', 'color: #ffff00; font-weight: bold;');
+    console.log('%c\n⌨️  CONTROLES DE NAVEGAÇÃO (com a janela aberta):', 'color: #ffff00; font-weight: bold;');
     console.log('%c  • Setas (← →) - Navegar entre slides', 'color: #00ff00;');
     console.log('%c  • Espaço - Próximo slide', 'color: #00ff00;');
     console.log('%c  • Números (1-8) - Pular para slide específico', 'color: #00ff00;');
