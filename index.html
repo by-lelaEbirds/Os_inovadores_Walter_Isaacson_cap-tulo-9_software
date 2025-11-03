@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Os Inovadores - Capítulo 9: Software</title>
+    <link rel="stylesheet" href="css/xp-theme.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="desktop">
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-start">
+                <button class="start-button" id="startBtn">
+                    <span class="windows-logo">⊞</span> Iniciar
+                </button>
+            </div>
+            <div class="taskbar-center">
+                <div class="taskbar-clock" id="clock">14:32</div>
+            </div>
+        </div>
+
+        <!-- Main Window -->
+        <div class="window" id="mainWindow">
+            <div class="window-title-bar">
+                <div class="window-title">
+                    <span class="window-icon">📊</span>
+                    Os Inovadores - Capítulo 9: Software
+                </div>
+                <div class="window-controls">
+                    <button class="window-btn minimize-btn">_</button>
+                    <button class="window-btn maximize-btn">□</button>
+                    <button class="window-btn close-btn">✕</button>
+                </div>
+            </div>
+
+            <div class="window-content">
+                <!-- Slide Container -->
+                <div class="slide-container">
+                    <!-- Slide 1: Título -->
+                    <div class="slide active" id="slide-1">
+                        <div class="slide-content">
+                            <div class="xp-window-inner">
+                                <h1 class="slide-title">OS INOVADORES</h1>
+                                <h2 class="slide-subtitle">Capítulo 9: Software</h2>
+                                <div class="slide-text">
+                                    <p><strong>A Revolução do Software Pessoal</strong></p>
+                                    <p class="slide-description">A gênese da indústria de software e a visão de Bill Gates e Paul Allen</p>
+                                </div>
+                                <div class="slide-icons">
+                                    <span class="icon">💾</span>
+                                    <span class="icon">🖥️</span>
+                                    <span class="icon">⌨️</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Gates & Allen -->
+                    <div class="slide" id="slide-2">
+                        <div class="slide-content">
+                            <h2 class="slide-title">GATES & ALLEN</h2>
+                            <h3 class="slide-subtitle">A Dupla Dinâmica</h3>
+                            <div class="slide-text">
+                                <div class="dialog-box">
+                                    <p><strong>Paul Allen:</strong> "Ei, isto está acontecendo sem a gente"</p>
+                                    <p><strong>Bill Gates:</strong> "Não somos gurus de hardware, Paul. A gente entende é de software."</p>
+                                </div>
+                                <ul class="slide-list">
+                                    <li>Encontro em Lakeside School</li>
+                                    <li>Paixão pela programação</li>
+                                    <li>Visão: Software como principal valor</li>
+                                    <li>Estímulo: Altair 8800 (1975)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: BASIC -->
+                    <div class="slide" id="slide-3">
+                        <div class="slide-content">
+                            <h2 class="slide-title">ALTAIR BASIC</h2>
+                            <h3 class="slide-subtitle">O Primeiro Passo</h3>
+                            <div class="slide-text">
+                                <div class="code-block">
+                                    <p class="code-line"><span class="code-number">10</span> <span class="code-keyword">PRINT</span> <span class="code-string">"HELLO WORLD"</span></p>
+                                    <p class="code-line"><span class="code-number">20</span> <span class="code-keyword">GOTO</span> <span class="code-number">10</span></p>
+                                </div>
+                                <ul class="slide-list">
+                                    <li><strong>BASIC:</strong> Beginner's All-Purpose Symbolic Instruction Code</li>
+                                    <li>Linguagem que democratizou a programação</li>
+                                    <li>Primeiro produto da Microsoft</li>
+                                    <li>Criado sem ter o hardware Altair</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Manifesto do Hobbyista -->
+                    <div class="slide" id="slide-4">
+                        <div class="slide-content">
+                            <h2 class="slide-title">O DEBATE</h2>
+                            <h3 class="slide-subtitle">Software é Livre?</h3>
+                            <div class="slide-text">
+                                <div class="warning-box">
+                                    <p><strong>⚠️ Alerta de Segurança</strong></p>
+                                    <p>A Carta Aberta de Bill Gates (1976)</p>
+                                </div>
+                                <ul class="slide-list">
+                                    <li><strong>Gates:</strong> Crítica à pirataria de software</li>
+                                    <li><strong>Argumento:</strong> Custo e esforço precisam ser recompensados</li>
+                                    <li><strong>Contraponto:</strong> Movimento do "software livre" (Richard Stallman)</li>
+                                    <li><strong>Imperativo Moral:</strong> Compartilhar código</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Microsoft & IBM -->
+                    <div class="slide" id="slide-5">
+                        <div class="slide-content">
+                            <h2 class="slide-title">MS-DOS</h2>
+                            <h3 class="slide-subtitle">O Acordo com a IBM</h3>
+                            <div class="slide-text">
+                                <div class="flow-diagram">
+                                    <div class="flow-box">IBM</div>
+                                    <div class="flow-arrow">→</div>
+                                    <div class="flow-box">Microsoft</div>
+                                    <div class="flow-arrow">→</div>
+                                    <div class="flow-box">PC</div>
+                                </div>
+                                <ul class="slide-list">
+                                    <li>Fornecimento do SO para IBM PC</li>
+                                    <li>PC-DOS / MS-DOS: Base para proliferação</li>
+                                    <li>Estratégia: Licenciar para outros fabricantes</li>
+                                    <li>Resultado: Ubiquidade da Microsoft</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: GUI -->
+                    <div class="slide" id="slide-6">
+                        <div class="slide-content">
+                            <h2 class="slide-title">GUI</h2>
+                            <h3 class="slide-subtitle">O Fim da Linha de Comando</h3>
+                            <div class="slide-text">
+                                <div class="gui-comparison">
+                                    <div class="dos-screen">
+                                        <p class="dos-text">C:\> _</p>
+                                    </div>
+                                    <div class="gui-screen">
+                                        <div class="desktop-icon">📁</div>
+                                        <div class="desktop-icon">🖨️</div>
+                                        <div class="desktop-icon">💾</div>
+                                    </div>
+                                </div>
+                                <ul class="slide-list">
+                                    <li><strong>Xerox PARC:</strong> Berço da interface gráfica</li>
+                                    <li><strong>Apple (Macintosh):</strong> Popularização da GUI</li>
+                                    <li><strong>Microsoft (Windows):</strong> Domínio no mercado de PCs</li>
+                                    <li>Mouse, ícones, janelas: Revolução na interação</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7: Legado -->
+                    <div class="slide" id="slide-7">
+                        <div class="slide-content">
+                            <h2 class="slide-title">O LEGADO</h2>
+                            <h3 class="slide-subtitle">A Arquitetura da Informação</h3>
+                            <div class="slide-text">
+                                <div class="legacy-box">
+                                    <p><strong>C:\> SHUTDOWN /s</strong></p>
+                                    <p class="legacy-text">O software continua a ser executado...</p>
+                                </div>
+                                <ul class="slide-list">
+                                    <li>Software como motor da inovação</li>
+                                    <li>Mais do que hardware, a experiência</li>
+                                    <li>Inovação contínua e cumulativa</li>
+                                    <li>Construído sobre os ombros de gigantes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 8: Fim -->
+                    <div class="slide" id="slide-8">
+                        <div class="slide-content">
+                            <div class="bsod">
+                                <div class="bsod-header">Um problema foi detectado e o Windows foi desligado para proteger seu computador.</div>
+                                <div class="bsod-content">
+                                    <p><strong>OBRIGADO PELA ATENÇÃO!</strong></p>
+                                    <p>Perguntas e Respostas</p>
+                                    <p class="reference">Referência: Walter Isaacson - Os Inovadores</p>
+                                </div>
+                                <div class="bsod-footer">
+                                    <p>Pressione qualquer tecla para continuar...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="slide-controls">
+                    <button class="nav-btn prev-btn" id="prevBtn">◄ Anterior</button>
+                    <div class="slide-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+                    </div>
+                    <button class="nav-btn next-btn" id="nextBtn">Próximo ►</button>
+                </div>
+
+                <!-- Keyboard Shortcuts Info -->
+                <div class="shortcuts-info">
+                    <p><small>Use as setas do teclado (← →) ou clique nos botões para navegar. Pressione ESC para sair.</small></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Menu (Hidden by default) -->
+        <div class="start-menu" id="startMenu">
+            <div class="start-menu-header">
+                <div class="start-menu-title">Programas</div>
+            </div>
+            <div class="start-menu-items">
+                <a href="#" class="start-menu-item">📊 Apresentação</a>
+                <a href="#" class="start-menu-item">📁 Arquivos</a>
+                <a href="#" class="start-menu-item">⚙️ Configurações</a>
+                <hr>
+                <a href="#" class="start-menu-item">🚪 Sair</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
