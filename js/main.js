@@ -1,4 +1,4 @@
-// Main JavaScript for Presentation - Enhanced Version with Welcome Screen and Details Panel
+// Main JavaScript for Presentation - "Diamante Refinado" Version
 
 // State Management
 let currentSlide = 1;
@@ -7,8 +7,6 @@ let isAnimating = false;
 let detailsPanelOpen = false;
 
 // DOM Elements
-// const welcomeScreen = document.getElementById('welcomeScreen'); // Removido
-// const startPresentationBtn = document.getElementById('startPresentationBtn'); // Removido
 const slides = document.querySelectorAll('.slide');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -23,10 +21,16 @@ const detailsPanel = document.getElementById('detailsPanel');
 const detailsCloseBtn = document.getElementById('detailsCloseBtn');
 const detailsTitle = document.getElementById('detailsTitle');
 const detailsContent = document.getElementById('detailsContent');
+const taskbarApp = document.getElementById('taskbarApp');
+
+// --- NOVOS Elementos do Menu Iniciar e Desligar ---
+const shutdownDialog = document.getElementById('shutdownDialog');
+const shutdownCloseBtn = document.getElementById('shutdownCloseBtn');
+const shutdownCancelBtn = document.getElementById('shutdownCancelBtn');
+const shutdownTurnOffBtn = document.getElementById('shutdownBtnTurnOff');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    // Funções da Welcome Screen removidas
     updateClock();
     setInterval(updateClock, 1000);
     logWelcomeMessage();
@@ -35,13 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePresentation();
     attachEventListeners();
     addWindowDragFunctionality();
+
+    // Inicia a apresentação (janela) por padrão
+    // Remova esta linha se quiser que comece com a janela fechada
+    toggleWindowVisibility(true); 
 });
-
-// Welcome Screen Listeners (Removidos)
-// function attachWelcomeScreenListeners() { ... }
-
-// Start Presentation (Removido)
-// function startPresentation() { ... }
 
 // Initialize Presentation
 function initializePresentation() {
@@ -66,17 +68,49 @@ function attachEventListeners() {
 
     // Window controls
     document.querySelector('.close-btn').addEventListener('click', closePresentation);
-    document.querySelector('.minimize-btn').addEventListener('click', minimizeWindow);
+    document.querySelector('.minimize-btn').addEventListener('click', () => toggleWindowVisibility(false));
     document.querySelector('.maximize-btn').addEventListener('click', maximizeWindow);
+    taskbarApp.addEventListener('click', () => toggleWindowVisibility());
 
-    // NOVO: Listener para o item da barra de tarefas
-    document.getElementById('taskbarApp').addEventListener('click', minimizeWindow);
+    // --- Listeners do Novo Menu Iniciar ---
+    document.getElementById('startMenuApp').addEventListener('click', () => toggleWindowVisibility(true));
+    document.getElementById('startMenuInternet').addEventListener('click', () => showProgramAlert('Internet Explorer', 'Conexão falhou. Verifique seu modem.'));
+    document.getElementById('startMenuEmail').addEventListener('click', () => showProgramAlert('Outlook Express', 'Nenhuma nova mensagem.'));
+    document.getElementById('startMenuMyDocs').addEventListener('click', () => showProgramAlert('Meus Documentos', 'Esta pasta está vazia.'));
+    document.getElementById('startMenuMyPC').addEventListener('click', () => showProgramAlert('Meu Computador', 'Disco Local (C:) - 99% Livre'));
+    document.getElementById('startMenuControlPanel').addEventListener('click', () => showProgramAlert('Painel de Controle', 'Funcionalidade em desenvolvimento.'));
+    document.getElementById('startMenuSearch').addEventListener('click', () => showProgramAlert('Pesquisar', 'Não foi possível encontrar "clipes de papel".'));
+
+    // Easter Egg Explícito
+    document.getElementById('startMenuHelp').addEventListener('click', () => {
+        alert('--- 💡 Ajuda e Suporte - Dicas Secretas 💡 ---\n\n' +
+              'Você encontrou os segredos!\n\n' +
+              '🎮 Tente o "Konami Code":\n' +
+              '↑ ↑ ↓ ↓ ← → ← → B A\n\n' +
+              '💰 Tente digitar os nomes dos fundadores:\n' +
+              '"BILL" ou "GATES"\n\n' +
+              'Divirta-se!');
+        toggleStartMenu(); // Fecha o menu
+    });
+
+    // --- Listeners do Diálogo "Desligar" ---
+    document.getElementById('startMenuTurnOff').addEventListener('click', () => {
+        shutdownDialog.style.display = 'flex';
+        toggleStartMenu(); // Fecha o menu
+    });
+    shutdownCloseBtn.addEventListener('click', () => shutdownDialog.style.display = 'none');
+    shutdownCancelBtn.addEventListener('click', () => shutdownDialog.style.display = 'none');
+    shutdownTurnOffBtn.addEventListener('click', () => {
+        document.body.innerHTML = '<div style="background:#000; color:#fff; width:100%; height:100vh; display:flex; align-items:center; justify-content:center; font-family:monospace; font-size:16px;">O Windows está sendo desligado...</div>';
+    });
+
 
     // Desktop shortcuts
     const desktopShortcuts = document.querySelectorAll('.desktop-shortcut');
-    desktopShortcuts.forEach((shortcut, index) => {
-        shortcut.addEventListener('dblclick', () => {
-            handleDesktopShortcut(index);
+    desktopShortcuts.forEach((shortcut) => {
+        shortcut.addEventListener('dblclick', (e) => {
+            const label = e.currentTarget.querySelector('.shortcut-label').textContent;
+            handleDesktopShortcut(label);
         });
     });
 }
@@ -102,6 +136,9 @@ function handleKeyPress(event) {
             if (detailsPanelOpen) {
                 closeDetailsPanel();
             }
+            if (shutdownDialog.style.display === 'flex') {
+                shutdownDialog.style.display = 'none';
+            }
             break;
         case ' ':
             event.preventDefault();
@@ -121,86 +158,53 @@ function handleKeyPress(event) {
     }
 }
 
-// Navigate to Next Slide
+// --- Funções de Navegação (Sem alterações) ---
 function nextSlide() {
     if (currentSlide < totalSlides && !isAnimating) {
         currentSlide++;
         updateSlideDisplay();
     }
 }
-
-// Navigate to Previous Slide
 function previousSlide() {
     if (currentSlide > 1 && !isAnimating) {
         currentSlide--;
         updateSlideDisplay();
     }
 }
-
-// Go to Specific Slide
 function goToSlide(slideNumber) {
     if (slideNumber >= 1 && slideNumber <= totalSlides && !isAnimating) {
         currentSlide = slideNumber;
         updateSlideDisplay();
     }
 }
-
-// Update Slide Display
 function updateSlideDisplay() {
     isAnimating = true;
-
-    // Hide all slides
-    slides.forEach(slide => {
-        slide.classList.remove('active');
-    });
-
-    // Show current slide
+    slides.forEach(slide => slide.classList.remove('active'));
     const activeSlide = document.getElementById(`slide-${currentSlide}`);
-    if (activeSlide) {
-        activeSlide.classList.add('active');
-    }
-
-    // Update counter
+    if (activeSlide) activeSlide.classList.add('active');
     currentSlideSpan.textContent = currentSlide;
-
-    // Update button states
     prevBtn.disabled = currentSlide === 1;
     nextBtn.disabled = currentSlide === totalSlides;
-
-    // Update details panel
     updateDetailsPanel();
-
-    // Reset animation flag after transition
-    setTimeout(() => {
-        isAnimating = false;
-    }, 400);
+    setTimeout(() => { isAnimating = false; }, 400);
 }
 
-// Toggle Details Panel
+// --- Funções do Painel de Detalhes (Sem alterações) ---
 function toggleDetailsPanel() {
-    if (detailsPanelOpen) {
-        closeDetailsPanel();
-    } else {
-        openDetailsPanel();
-    }
+    if (detailsPanelOpen) closeDetailsPanel();
+    else openDetailsPanel();
 }
-
-// Open Details Panel
 function openDetailsPanel() {
     detailsPanel.classList.add('active');
     detailsBtn.classList.add('active');
     detailsPanelOpen = true;
     updateDetailsPanel();
 }
-
-// Close Details Panel
 function closeDetailsPanel() {
     detailsPanel.classList.remove('active');
     detailsBtn.classList.remove('active');
     detailsPanelOpen = false;
 }
-
-// Update Details Panel Content
 function updateDetailsPanel() {
     if (currentSlide >= 1 && currentSlide <= slideDetails.length) {
         const detail = slideDetails[currentSlide - 1];
@@ -209,22 +213,24 @@ function updateDetailsPanel() {
     }
 }
 
-// Toggle Start Menu
+// --- Funções do Menu Iniciar e Janela ---
 function toggleStartMenu() {
     startMenu.classList.toggle('active');
+    startBtn.classList.toggle('active');
 }
 
-// Handle Document Click
 function handleDocumentClick(event) {
+    // Fecha o Menu Iniciar se clicar fora
     if (!event.target.closest('.start-button') && !event.target.closest('.start-menu')) {
         startMenu.classList.remove('active');
+        startBtn.classList.remove('active');
     }
+    // Não fecha o painel de detalhes ao clicar nele
     if (!event.target.closest('.details-panel') && !event.target.closest('.details-btn')) {
-        // Don't close on details panel click
+        // (lógica de fechar painel de detalhes removida daqui para focar no ESC)
     }
 }
 
-// Update Clock
 function updateClock() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -232,34 +238,58 @@ function updateClock() {
     clockElement.textContent = `${hours}:${minutes}`;
 }
 
-// Window Controls
+// Fecha a janela (botão X)
 function closePresentation() {
     if (confirm('Deseja realmente encerrar a apresentação?')) {
-        alert('Obrigado por assistir! 🎉');
-        mainWindow.style.opacity = '0';
-        mainWindow.style.transform = 'translate(-50%, -50%) scale(0.8)';
-        setTimeout(() => {
-            mainWindow.style.display = 'none';
-        }, 300);
+        toggleWindowVisibility(false);
     }
 }
 
-// Esta função agora abre e fecha a janela (usada pelo botão minimizar E pelo item da barra de tarefas)
-function minimizeWindow() {
+// Abre/Fecha a janela (minimizar e barra de tarefas)
+function toggleWindowVisibility(forceShow = null) {
     const isHidden = mainWindow.style.display === 'none';
-    if (isHidden) {
+    
+    let show = forceShow !== null ? forceShow : isHidden;
+
+    if (show) {
         mainWindow.style.display = 'flex';
+        taskbarApp.classList.add('active');
         // Força a re-aplicação da animação de "aparecer"
         mainWindow.style.animation = 'none';
         setTimeout(() => {
-            mainWindow.style.animation = 'windowAppear 0.3s ease-out';
+            mainWindow.style.animation = 'windowAppear 0.2s ease-out';
             mainWindow.style.opacity = '1';
             mainWindow.style.transform = 'translate(-50%, -50%) scale(1)';
         }, 10);
     } else {
-        mainWindow.style.display = 'none';
+        mainWindow.style.animation = 'windowMinimize 0.2s ease-out forwards';
+        setTimeout(() => {
+             mainWindow.style.display = 'none';
+        }, 200);
+        taskbarApp.classList.remove('active');
     }
+    
+    // Fecha menus ao interagir com a janela
+    startMenu.classList.remove('active');
+    startBtn.classList.remove('active');
 }
+
+// Adiciona animação de minimizar
+const minimizeAnimationStyle = document.createElement('style');
+minimizeAnimationStyle.textContent = `
+    @keyframes windowMinimize {
+        from {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: translate(-50%, 100vh) scale(0.5);
+        }
+    }
+`;
+document.head.appendChild(minimizeAnimationStyle);
+
 
 function maximizeWindow() {
     const isMaximized = mainWindow.style.width === '100vw';
@@ -271,44 +301,45 @@ function maximizeWindow() {
         mainWindow.style.top = '50%';
         mainWindow.style.left = '50%';
         mainWindow.style.transform = 'translate(-50%, -50%)';
+        mainWindow.style.borderRadius = '8px 8px 0 0';
     } else {
         mainWindow.style.width = '100vw';
-        mainWindow.style.height = '100vh';
+        mainWindow.style.height = 'calc(100vh - 30px)'; // Altura total menos a barra de tarefas
         mainWindow.style.maxWidth = 'none';
         mainWindow.style.maxHeight = 'none';
         mainWindow.style.top = '0';
         mainWindow.style.left = '0';
         mainWindow.style.transform = 'none';
+        mainWindow.style.borderRadius = '0';
     }
 }
 
-// Add Window Drag Functionality
+// Arrastar Janela
 function addWindowDragFunctionality() {
     const titleBar = document.querySelector('.window-title-bar');
     let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
+    let initialX, initialY, offsetX, offsetY;
 
     titleBar.addEventListener('mousedown', (e) => {
-        // Não arrasta se a janela estiver maximizada
-        if (mainWindow.style.width === '100vw') {
-            return;
-        }
+        if (mainWindow.style.width === '100vw') return; // Não arrasta maximizado
+        
         isDragging = true;
-        initialX = e.clientX - mainWindow.offsetLeft;
-        initialY = e.clientY - mainWindow.offsetTop;
+        const rect = mainWindow.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        
+        // Remove 'translate' para usar top/left
+        mainWindow.style.transform = 'none';
+        mainWindow.style.left = `${rect.left}px`;
+        mainWindow.style.top = `${rect.top}px`;
     });
 
     document.addEventListener('mousemove', (e) => {
         if (isDragging) {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-            mainWindow.style.position = 'fixed'; // Garante que é 'fixed'
-            mainWindow.style.left = currentX + 'px';
-            mainWindow.style.top = currentY + 'px';
-            mainWindow.style.transform = 'none'; // Remove o 'translate'
+            currentX = e.clientX - offsetX;
+            currentY = e.clientY - offsetY;
+            mainWindow.style.left = `${currentX}px`;
+            mainWindow.style.top = `${currentY}px`;
         }
     });
 
@@ -317,60 +348,42 @@ function addWindowDragFunctionality() {
     });
 }
 
-// Handle Desktop Shortcuts
-function handleDesktopShortcut(index) {
-    const messages = [
-        '💻 Meu PC - Sistema de Arquivos',
-        '📁 Meus Documentos - Vazio',
-        '🌐 Internet Explorer - Conectando...',
-        '🗑️ Lixeira - Vazia'
-    ];
-    alert(messages[index]);
+// Ícones do Desktop e Alertas
+function handleDesktopShortcut(label) {
+    const messages = {
+        'Meu PC': 'Disco Local (C:) - 99% Livre',
+        'Meus Documentos': 'Esta pasta está vazia.',
+        'Internet Explorer': 'Conexão falhou. Verifique seu modem.',
+        'Lixeira': 'A Lixeira está vazia.'
+    };
+    showProgramAlert(label, messages[label]);
 }
 
-// Keyboard Shortcuts for Slide Navigation
-document.addEventListener('keydown', (event) => {
-    // Não processa teclas se a janela principal estiver escondida
-    if (mainWindow.style.display === 'none') return;
-    
-    // Number keys to jump to slide
-    if (event.key >= '1' && event.key <= '9') {
-        const slideNum = parseInt(event.key);
-        if (slideNum <= totalSlides) {
-            goToSlide(slideNum);
-        }
-    }
-});
+function showProgramAlert(title, message) {
+    alert(`--- 🖥️ ${title} ---\n\n${message}`);
+    toggleStartMenu();
+}
 
-// Add Touch Support for Mobile Devices
+
+// --- Funções de Swipe (Sem alterações) ---
 let touchStartX = 0;
 let touchEndX = 0;
-
-document.addEventListener('touchstart', (event) => {
-    touchStartX = event.changedTouches[0].screenX;
-});
-
+document.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].screenX; });
 document.addEventListener('touchend', (event) => {
     touchEndX = event.changedTouches[0].screenX;
     handleSwipe();
 });
-
 function handleSwipe() {
-    if (mainWindow.style.display === 'none') return; // Não faz swipe se a janela estiver fechada
-    if (touchEndX < touchStartX - 50) {
-        nextSlide();
-    } else if (touchEndX > touchStartX + 50) {
-        previousSlide();
-    }
+    if (mainWindow.style.display === 'none') return;
+    if (touchEndX < touchStartX - 50) nextSlide();
+    else if (touchEndX > touchStartX + 50) previousSlide();
 }
 
-// Easter Eggs and Fun Features
+// --- Easter Eggs (Sem alterações) ---
 let konamiIndex = 0;
 const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
 document.addEventListener('keydown', (e) => {
     const key = e.key;
-    
     if (key === konamiCode[konamiIndex]) {
         konamiIndex++;
         if (konamiIndex === konamiCode.length) {
@@ -381,17 +394,12 @@ document.addEventListener('keydown', (e) => {
         konamiIndex = 0;
     }
 });
-
 function activateKonamiEasterEgg() {
     playSound('success');
     showEasterEggMessage('🎮 KONAMI CODE ATIVADO! Bem-vindo ao mundo do Windows XP! 🎮');
     document.body.style.filter = 'hue-rotate(45deg) saturate(1.5)';
-    setTimeout(() => {
-        document.body.style.filter = 'none';
-    }, 3000);
+    setTimeout(() => { document.body.style.filter = 'none'; }, 3000);
 }
-
-// Easter Egg: Type "BILL" to trigger
 let billSequence = '';
 document.addEventListener('keydown', (e) => {
     billSequence += e.key.toUpperCase();
@@ -400,12 +408,8 @@ document.addEventListener('keydown', (e) => {
         playSound('success');
         billSequence = '';
     }
-    if (billSequence.length > 10) {
-        billSequence = billSequence.slice(-10);
-    }
+    if (billSequence.length > 10) billSequence = billSequence.slice(-10);
 });
-
-// Easter Egg: Type "GATES" to trigger
 let gatesSequence = '';
 document.addEventListener('keydown', (e) => {
     gatesSequence += e.key.toUpperCase();
@@ -414,80 +418,43 @@ document.addEventListener('keydown', (e) => {
         playSound('success');
         gatesSequence = '';
     }
-    if (gatesSequence.length > 10) {
-        gatesSequence = gatesSequence.slice(-10);
-    }
+    if (gatesSequence.length > 10) gatesSequence = gatesSequence.slice(-10);
 });
-
-// Show Easter Egg Message
 function showEasterEggMessage(message) {
     const easterEggDiv = document.createElement('div');
     easterEggDiv.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, #1084d7, #0a246a);
-        color: white;
-        padding: 20px 40px;
-        border: 3px solid #ffff00;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        z-index: 10000;
-        box-shadow: 0 0 20px rgba(16, 132, 215, 0.8);
-        animation: easterEggAppear 0.3s ease-out;
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, var(--xp-blue-gradient-start), var(--xp-blue-dark));
+        color: white; padding: 20px 40px; border: 3px solid #FFB74D; border-radius: 8px;
+        font-size: 16px; font-weight: bold; text-align: center; z-index: 10000;
+        box-shadow: 0 0 20px rgba(16, 132, 215, 0.8); animation: easterEggAppear 0.3s ease-out;
     `;
     easterEggDiv.textContent = message;
     document.body.appendChild(easterEggDiv);
-
     setTimeout(() => {
         easterEggDiv.style.animation = 'easterEggDisappear 0.3s ease-out forwards';
-        setTimeout(() => {
-            easterEggDiv.remove();
-        }, 300);
+        setTimeout(() => { easterEggDiv.remove(); }, 300);
     }, 3000);
 }
-
-// Add CSS for Easter Egg Animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes easterEggAppear {
-        from {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-        }
-        to {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
+        from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
-    
     @keyframes easterEggDisappear {
-        from {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        to {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-        }
+        from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        to { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
     }
 `;
 document.head.appendChild(style);
-
-// Play Sound (simple beep)
 function playSound(type) {
-    // Create a simple beep using Web Audio API
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
-
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
-
         if (type === 'success') {
             oscillator.frequency.value = 800;
             gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
@@ -495,41 +462,23 @@ function playSound(type) {
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 0.1);
         }
-    } catch (e) {
-        // Fallback if Web Audio API is not available
-        console.log('Sound not available');
-    }
+    } catch (e) { console.log('Sound not available'); }
 }
 
 // Log Welcome Message
 function logWelcomeMessage() {
     console.clear();
-    console.log('%c╔════════════════════════════════════════════════════════════╗', 'color: #1084d7; font-weight: bold;');
-    console.log('%c║  🖥️  OS INOVADORES - CAPÍTULO 9: SOFTWARE  🖥️             ║', 'color: #1084d7; font-weight: bold;');
-    console.log('%c╚════════════════════════════════════════════════════════════╝', 'color: #1084d7; font-weight: bold;');
-    console.log('%c\n📚 Desktop carregado com sucesso!\n', 'color: #00ff00; font-size: 12px; font-weight: bold;');
-    console.log('%c🖱️  Clique em "📊 Apresentação" na barra de tarefas para começar.', 'color: #ffff00; font-weight: bold;');
-    console.log('%c\n⌨️  CONTROLES DE NAVEGAÇÃO (com a janela aberta):', 'color: #ffff00; font-weight: bold;');
-    console.log('%c  • Setas (← →) - Navegar entre slides', 'color: #00ff00;');
-    console.log('%c  • Espaço - Próximo slide', 'color: #00ff00;');
-    console.log('%c  • Números (1-8) - Pular para slide específico', 'color: #00ff00;');
-    console.log('%c  • Home/End - Primeiro/Último slide', 'color: #00ff00;');
-    console.log('%c  • D - Alternar painel de detalhes', 'color: #00ff00;');
-    console.log('%c  • ESC - Fechar menus', 'color: #00ff00;');
-    console.log('%c\n🎮 EASTER EGGS:', 'color: #ffff00; font-weight: bold;');
-    console.log('%c  • Digite "BILL" ou "GATES" para mensagens especiais', 'color: #00ff00;');
-    console.log('%c  • Tente o Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'color: #00ff00;');
-    console.log('%c\n💡 Dica: Clique e arraste a janela para mover!', 'color: #ffff00;');
-    console.log('%c\n', 'color: #1084d7;');
+    console.log('%c╔════════════════════════════════════════════════════════════╗', 'color: #0053E1; font-weight: bold;');
+    console.log('%c║  🖥️  OS INOVADORES - CAPÍTULO 9: SOFTWARE (v2.0) 🖥️      ║', 'color: #0053E1; font-weight: bold;');
+    console.log('%c╚════════════════════════════════════════════════════════════╝', 'color: #0053E1; font-weight: bold;');
+    console.log('%c\n📚 Desktop carregado com sucesso!\n', 'color: #8BC34A; font-size: 12px; font-weight: bold;');
+    console.log('%c🖱️  A apresentação está pronta!', 'color: #FFB74D; font-weight: bold;');
+    console.log('%c\n⌨️  CONTROLES DE NAVEGAÇÃO (com a janela aberta):', 'color: #FFB74D; font-weight: bold;');
+    console.log('%c  • Setas (← →) - Navegar entre slides', 'color: #000;');
+    console.log('%c  • Espaço - Próximo slide', 'color: #000;');
+    console.log('%c  • Números (1-8) - Pular para slide específico', 'color: #000;');
+    console.log('%c  • Home/End - Primeiro/Último slide', 'color: #000;');
+    console.log('%c  • D - Alternar painel de detalhes', 'color: #000;');
+    console.log('%c  • ESC - Fechar menus e diálogo de "Desligar"', 'color: #000;');
+    console.log('%c\n🤫 Dica Secreta: Clique em Iniciar > Ajuda e Suporte...', 'color: #7F7F7F;');
 }
-
-// Prevent accidental navigation
-window.addEventListener('beforeunload', (event) => {
-    // Uncomment to prevent accidental page reload
-    // event.preventDefault();
-    // event.returnValue = '';
-});
-
-// Log presentation info
-console.log('%cDesenvolvido com ❤️ e nostalgia do Windows XP', 'color: #1084d7; font-style: italic;');
-console.log('%c"A gente entende é de software." - Bill Gates', 'color: #00ff00; font-style: italic;');
