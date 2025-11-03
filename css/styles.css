@@ -8,6 +8,14 @@
     background: linear-gradient(135deg, #c0c0c0, #dfdfdf);
 }
 
+/* NOVO: Wrapper para Slide e Painel de Detalhes */
+.main-content-wrapper {
+    flex: 1; /* Ocupa o espaço principal */
+    display: flex;
+    position: relative; /* Âncora para o painel absoluto */
+    overflow: hidden; /* Esconde o painel quando está fora */
+}
+
 /* Slide */
 .slide {
     display: none;
@@ -277,13 +285,13 @@
     word-wrap: break-word;
 }
 
-/* Details Panel */
+/* Details Panel (CORRIGIDO) */
 .details-panel {
-    position: fixed;
+    position: absolute; /* ALTERADO: de 'fixed' para 'absolute' */
     right: -400px;
-    top: 28px;
+    top: 0; /* ALTERADO: de '28px' para '0' (relativo ao wrapper) */
     width: 380px;
-    height: calc(100vh - 56px);
+    height: 100%; /* ALTERADO: para preencher o wrapper */
     background: linear-gradient(135deg, #c0c0c0, #dfdfdf);
     border: 2px solid;
     border-color: #dfdfdf #808080 #808080 #dfdfdf;
@@ -508,6 +516,14 @@
         min-width: 70px;
         padding: 4px 10px;
         font-size: 10px;
+    }
+    
+    /* CORREÇÃO RESPONSIVA: Esconde painel de detalhes em telas pequenas */
+    .details-panel {
+        display: none;
+    }
+    .details-btn {
+        display: none;
     }
 }
 
