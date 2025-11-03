@@ -11,9 +11,6 @@
     <div class="desktop">
         <div class="background-animation"></div>
 
-        <div class="welcome-screen" id="welcomeScreen">
-            </div>
-
         <div class="taskbar">
             <div class="taskbar-start">
                 <button class="start-button" id="startBtn">
@@ -23,7 +20,10 @@
             </div>
             <div class="taskbar-center">
                 <div class="taskbar-items">
-                    <div class="taskbar-item" id="taskbarApp">📊 Apresentação</div>
+                    <div class="taskbar-item active" id="taskbarApp">
+                        <img src="https://i.imgur.com/8l6J0fT.png" class="taskbar-icon" alt="ícone"/>
+                        Apresentação
+                    </div>
                 </div>
             </div>
             <div class="taskbar-clock" id="clock">14:32</div>
@@ -32,7 +32,7 @@
         <div class="window" id="mainWindow">
             <div class="window-title-bar">
                 <div class="window-title">
-                    <span class="window-icon">💾</span>
+                    <img src="https://i.imgur.com/8l6J0fT.png" class="window-icon" alt="ícone"/>
                     Os Inovadores - Capítulo 9: Software
                 </div>
                 <div class="window-controls">
@@ -262,17 +262,93 @@
         </div>
 
         <div class="start-menu" id="startMenu">
-            <div class="start-menu-header">
-                <div class="start-menu-title">Programas</div>
+            <div class="start-menu-user-header">
+                <img src="https://i.imgur.com/710AvsC.png" alt="User Avatar" class="start-menu-avatar"/>
+                <span class="start-menu-username">Apresentador</span>
             </div>
-            <div class="start-menu-items">
-                <a href="#" class="start-menu-item" onclick="goToSlide(1); return false;">📊 Apresentação</a>
-                <a href="#" class="start-menu-item">📁 Arquivos</a>
-                <a href="#" class="start-menu-item">⚙️ Configurações</a>
-                <a href="#" class="start-menu-item">🌐 Internet Explorer</a>
-                <hr>
-                <a href="#" class="start-menu-item">🔍 Pesquisar</a>
-                <a href="#" class="start-menu-item">🚪 Sair</a>
+            <div class="start-menu-body">
+                <div class="start-menu-left">
+                    <ul class="start-menu-list">
+                        <li id="startMenuInternet">
+                            <img src="https://i.imgur.com/uHZGqtn.png" alt="Internet"/>
+                            <span>Internet</span>
+                        </li>
+                        <li id="startMenuEmail">
+                            <img src="https://i.imgur.com/SjR4s8S.png" alt="Email"/>
+                            <span>E-mail</span>
+                        </li>
+                    </ul>
+                    <hr class="start-menu-divider-left"/>
+                    <ul class="start-menu-list" id="startMenuAllPrograms">
+                        <li id="startMenuApp">
+                            <img src="https://i.imgur.com/8l6J0fT.png" alt="Apresentação"/>
+                            <span>Apresentação</span>
+                        </li>
+                        <li id="startMenuHelp">
+                            <img src="https://i.imgur.com/kSj9T0c.png" alt="Ajuda"/>
+                            <span>Ajuda e Suporte</span>
+                        </li>
+                        <li id="startMenuSearch">
+                            <img src="https://i.imgur.com/B1QkY1B.png" alt="Pesquisar"/>
+                            <span>Pesquisar</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="start-menu-right">
+                    <ul class="start-menu-list">
+                        <li id="startMenuMyDocs">
+                            <img src="https://i.imgur.com/6xkzXjD.png" alt="Documentos"/>
+                            <span>Meus Documentos</span>
+                        </li>
+                        <li id="startMenuMyPC">
+                            <img src="https://i.imgur.com/zWzX6Y7.png" alt="Meu PC"/>
+                            <span>Meu Computador</span>
+                        </li>
+                    </ul>
+                    <hr class="start-menu-divider-right"/>
+                    <ul class="start-menu-list">
+                        <li id="startMenuControlPanel">
+                            <img src="https://i.imgur.com/T0b6YLD.png" alt="Painel de Controle"/>
+                            <span>Painel de Controle</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="start-menu-footer">
+                <div class="start-menu-footer-btn" id="startMenuLogOff">
+                    <img src="https://i.imgur.com/2X8s11K.png" alt="Log Off"/>
+                    <span>Fazer Logoff</span>
+                </div>
+                <div class="start-menu-footer-btn" id="startMenuTurnOff">
+                    <img src="https://i.imgur.com/S5f21D5.png" alt="Desligar"/>
+                    <span>Desligar</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="shutdown-dialog" id="shutdownDialog">
+            <div class="shutdown-window">
+                <div class="shutdown-title-bar">
+                    <span>Desligar o computador</span>
+                    <button class="shutdown-close" id="shutdownCloseBtn">✕</button>
+                </div>
+                <div class="shutdown-content">
+                    <div class="shutdown-btn" id="shutdownBtnStandby">
+                        <img src="https://i.imgur.com/J8Vq4xL.png" alt="Standby"/>
+                        <span>Espera</span>
+                    </div>
+                    <div class="shutdown-btn" id="shutdownBtnTurnOff">
+                        <img src="https://i.imgur.com/S5f21D5.png" alt="Desligar"/>
+                        <span>Desligar</span>
+                    </div>
+                    <div class="shutdown-btn" id="shutdownBtnRestart">
+                        <img src="https://i.imgur.com/j0f1L9Y.png" alt="Reiniciar"/>
+                        <span>Reiniciar</span>
+                    </div>
+                </div>
+                <div class="shutdown-footer">
+                    <button id="shutdownCancelBtn">Cancelar</button>
+                </div>
             </div>
         </div>
 
