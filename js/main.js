@@ -254,6 +254,15 @@ function toggleWindowVisibility(forceShow = null) {
     if (show) {
         mainWindow.style.display = 'flex';
         taskbarApp.classList.add('active');
+        
+        // --- INÍCIO DA CORREÇÃO ---
+        // Reseta a posição TOP e LEFT para os valores padrão de centralização
+        // Isso corrige o bug onde a janela reabre fora da tela
+        // se foi arrastada e depois fechada.
+        mainWindow.style.top = '50%';
+        mainWindow.style.left = '50%';
+        // --- FIM DA CORREÇÃO ---
+
         // Força a re-aplicação da animação de "aparecer"
         mainWindow.style.animation = 'none';
         setTimeout(() => {
