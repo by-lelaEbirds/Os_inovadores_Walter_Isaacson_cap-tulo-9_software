@@ -4,370 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Os Inovadores - Capítulo 9: Software</title>
-    <link rel="stylesheet" href="css/xp-theme.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <style>
+        .slide-image {
+            max-width: 90%;
+            max-height: 50vh; /* Ajusta altura máxima para não sobrepor muito */
+            object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
+            margin: 20px auto; /* Centraliza e adiciona espaço */
+            display: block; /* Para margin auto funcionar */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Estilos específicos para certas imagens se necessário */
+        #slide-1 .slide-image {
+            max-height: 45vh; /* um pouco menor para o texto não ficar muito espremido */
+        }
+
+        #slide-2 .slide-image {
+            filter: grayscale(100%) brightness(1.1); /* Deixa a imagem P&B */
+            max-height: 40vh;
+        }
+
+        #slide-4 .slide-image {
+             max-height: 40vh;
+        }
+
+        #slide-5 .slide-image {
+            max-height: 35vh;
+            background-color: #333; /* Fundo escuro para o logo MS-DOS */
+            padding: 10px;
+        }
+
+        /* Ajustes para layout quando a imagem está presente */
+        .slide h2, .slide h3 {
+            margin-top: 10px; /* Reduz margem superior quando há imagem */
+            margin-bottom: 5px;
+        }
+
+        .slide ul {
+            margin-top: 15px;
+        }
+
+         /* Estilo para a caixa de erro do slide 4 */
+        #slide-4 .error-box {
+            background-color: #f8d7da; /* Vermelho claro */
+            color: #721c24; /* Texto vermelho escuro */
+            border: 1px solid #f5c6cb;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px auto;
+            max-width: 80%;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #slide-4 .error-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="desktop">
-        <div class="background-animation"></div>
-
-        <div class="taskbar">
-            <div class="taskbar-start">
-                <button class="start-button" id="startBtn">
-                    <span class="windows-logo">⊞</span> Iniciar
-                </button>
-                <div class="taskbar-divider"></div>
-            </div>
-            <div class="taskbar-center">
-                <div class="taskbar-items">
-                    <div class="taskbar-item active" id="taskbarApp">
-                        <img src="https://i.imgur.com/8l6J0fT.png" class="taskbar-icon" alt="ícone"/>
-                        Apresentação
-                    </div>
+    <div class="xp-desktop">
+        <div class="desktop-shortcut" id="my-pc-shortcut">
+            <img src="assets/my-computer.png" alt="Meu Computador">
+            <span class="shortcut-label">Meu PC</span>
+        </div>
+        <div class="desktop-shortcut" id="my-documents-shortcut">
+            <img src="assets/my-documents.png" alt="Meus Documentos">
+            <span class="shortcut-label">Meus Documentos</span>
+        </div>
+        <div class="desktop-shortcut" id="internet-explorer-shortcut">
+            <img src="assets/internet-explorer.png" alt="Internet Explorer">
+            <span class="shortcut-label">Internet Explorer</span>
+        </div>
+         <div class="desktop-shortcut" id="recycle-bin-shortcut">
+            <img src="assets/recycle-bin.png" alt="Lixeira">
+            <span class="shortcut-label">Lixeira</span>
+        </div>
+        <div class="window" id="mainWindow" style="display: none;">
+            <div class="window-title-bar">
+                <img src="assets/windows-xp-icon.png" alt="Icon" class="window-icon">
+                <span class="window-title">Os Inovadores - Capítulo 9: Software</span>
+                <div class="window-controls">
+                    <button class="minimize-btn" title="Minimizar">_</button>
+                    <button class="maximize-btn" title="Maximizar">□</button>
+                    <button class="close-btn" title="Fechar">X</button>
                 </div>
             </div>
-            <div class="taskbar-clock" id="clock">14:32</div>
+            <div class="window-content">
+                <div class="presentation-container">
+                    <div class="slides-container">
+                        <div class="slide active" id="slide-1">
+                            <h1>OS INOVADORES</h1>
+                            <h3>Capítulo 9: Software</h3>
+                            <img src="assets/image.jpg" alt="Altair 8800 Computer" class="slide-image">
+                            <h2>A Revolução do Software Pessoal</h2>
+                            <p>A gênese da indústria de software e a visão de Bill Gates e Paul Allen</p>
+                        </div>
+                        <div class="slide" id="slide-2">
+                            <h1>GATES & ALLEN</h1>
+                            <h3>A Dupla Dinâmica</h3>
+                            <img src="assets/PAUL-ALLEN-BILL-GATES-1978.jpg" alt="Bill Gates and Paul Allen 1978" class="slide-image">
+                            <div class="terminal-dialog">
+                                <p><strong>Paul Allen:</strong> "Ei, isto está acontecendo sem a gente"</p>
+                                <p><strong>Bill Gates:</strong> "Não somos gurus de hardware, Paul. A gente entende é de software."</p>
+                            </div>
+                            <ul>
+                                <li><strong>Encontro em Lakeside School</strong> (1968)</li>
+                                <li>Paixão pela programação e lógica</li>
+                                <li>Visão: Software como principal valor</li>
+                                <li>Estímulo: Altair 8800 (janeiro de 1975)</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-3">
+                            <h1>ALTAIR BASIC</h1>
+                            <h3>O Primeiro Passo</h3>
+                            <div class="code-block">
+                                <pre><code>10 PRINT "HELLO WORLD"
+20 GOTO 10
+30 END</code></pre>
+                            </div>
+                            <ul>
+                                <li><strong>BASIC:</strong> Beginner's All-Purpose Symbolic Instruction Code</li>
+                                <li>Linguagem que democratizou a programação</li>
+                                <li>Primeiro produto da Microsoft (Micro-Soft)</li>
+                                <li>Criado em 8 semanas, sem ter o hardware Altair</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-4">
+                            <h1>O DEBATE</h1>
+                            <h3>Software é Livre?</h3>
+                            <img src="assets/https__ep01.epimg.net_cultura_imagenes_2016_05_11_actualidad_1462973003_473243_1462986868_noticia_normal.jpg" alt="Richard Stallman e a frase Libre not Gratis" class="slide-image">
+                            <div class="error-box">
+                                <strong>A Carta Aberta de Bill Gates (1976)</strong>
+                                Crítica à pirataria de software
+                            </div>
+                            <ul>
+                                <li><strong>Gates:</strong> "Você roubou software?"</li>
+                                <li><strong>Argumento:</strong> Custo e esforço precisam ser recompensados</li>
+                                <li><strong>Contraponto:</strong> Movimento do "software livre" (Richard Stallman)</li>
+                                <li><strong>Imperativo Moral:</strong> Compartilhar código e conhecimento</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-5">
+                            <h1>MS-DOS</h1>
+                            <h3>O Acordo com a IBM</h3>
+                            <img src="assets/ms-dos-logo.webp" alt="MS-DOS Logo" class="slide-image">
+                            <div class="flow-diagram">
+                                <span>IBM</span> → <span>Microsoft</span> → <span>PC</span>
+                            </div>
+                            <ul>
+                                <li>Fornecimento do SO para IBM PC (1981)</li>
+                                <li>PC-DOS / MS-DOS: Base para proliferação</li>
+                                <li>Estratégia genial: Licenciar para outros fabricantes</li>
+                                <li>Resultado: Ubiquidade da Microsoft e domínio de mercado</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-6">
+                            <h1>GUI</h1>
+                            <h3>O Fim da Linha de Comando</h3>
+                            <div class="gui-comparison">
+                                <div class="dos-screen">
+                                    <pre><code>C:\&gt; _</code></pre>
+                                </div>
+                                <div class="arrow">→</div>
+                                <div class="gui-screen">
+                                    <img src="assets/xp-my-computer.png" alt="Meu PC Icon">
+                                    <img src="assets/xp-printer.png" alt="Impressora Icon">
+                                    <img src="assets/xp-diskette.png" alt="Disquete Icon">
+                                </div>
+                            </div>
+                            <ul>
+                                <li><strong>Xerox PARC (1970s):</strong> Berço da interface gráfica</li>
+                                <li><strong>Apple Macintosh (1984):</strong> Popularização da GUI</li>
+                                <li><strong>Microsoft Windows (1985+):</strong> Domínio no mercado de PCs</li>
+                                <li>Mouse, ícones, janelas: Revolução na interação humano-computador</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-7">
+                            <h1>O LEGADO</h1>
+                            <h3>A Arquitetura da Informação</h3>
+                            <div class="shutdown-screen">
+                                <pre><code>C:\> SHUTDOWN /s /t 0
+O software continua a ser executado...</code></pre>
+                            </div>
+                            <ul>
+                                <li>Software como motor da inovação tecnológica</li>
+                                <li>Mais do que hardware, a experiência do usuário</li>
+                                <li>Inovação contínua e cumulativa (standing on the shoulders of giants)</li>
+                                <li>A internet, aplicativos e a era digital: tudo construído em software</li>
+                            </ul>
+                        </div>
+                        <div class="slide" id="slide-8">
+                            <div class="bsod">
+                                <p>Um problema foi detectado e o Windows foi desligado para evitar danos ao seu computador.</p>
+                                <p>Se esta é a primeira vez que você vê esta tela de erro de parada, reinicie o computador.</p>
+                                <p>Se esta tela aparecer novamente, siga estas etapas:</p>
+                                <p>Verifique se há espaço em disco suficiente. Se um driver for identificado na mensagem de parada, desative o driver ou tente atualizar o driver. Experimente trocar os adaptadores de vídeo.</p>
+                                <p>Verifique seu fornecedor de hardware para quaisquer atualizações de BIOS.</p>
+                                <p>Informações técnicas:</p>
+                                <p>*** STOP: 0x000000D1 (0x0000000C, 0x00000002, 0x00000000, 0xF86B5A89)</p>
+                            </div>
+                            <h1>OBRIGADO PELA ATENÇÃO!</h1>
+                            <h3>Perguntas e Respostas</h3>
+                            <p class="reference">📚 Referência: Walter Isaacson - Os Inovadores</p>
+                            <p class="reference">Capítulo 9: Software (páginas 324-385)</p>
+                            <p class="press-key">Pressione qualquer tecla para continuar...</p>
+                        </div>
+                    </div>
+                    <div class="presentation-controls">
+                        <button id="prevBtn" class="xp-button" disabled>&#9664; Anterior</button>
+                        <span class="slide-counter">Slide <span id="currentSlide">1</span> / <span id="totalSlides">8</span></span>
+                        <button id="nextBtn" class="xp-button">Próximo &#9654;</button>
+                    </div>
+                    <button id="detailsBtn" class="xp-button details-button">Detalhes do Slide</button>
+                </div>
+            </div>
         </div>
 
-        <div class="window" id="mainWindow">
-            <div class="window-title-bar">
-                <div class="window-title">
-                    <img src="https://i.imgur.com/8l6J0fT.png" class="window-icon" alt="ícone"/>
-                    Os Inovadores - Capítulo 9: Software
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize-btn" title="Minimizar">_</button>
-                    <button class="window-btn maximize-btn" title="Maximizar">□</button>
-                    <button class="window-btn close-btn" title="Fechar">✕</button>
-                </div>
+        <div class="details-panel" id="detailsPanel">
+            <div class="details-header">
+                <h4 id="detailsTitle"></h4>
+                <button id="detailsCloseBtn" class="xp-button close-details-btn">X</button>
             </div>
-
-            <div class="window-content">
-                <div class="main-content-wrapper">
-                    <div class="slide-container">
-                        <div class="slide active" id="slide-1">
-                            <div class="slide-content boot-screen">
-                                <div class="boot-animation">
-                                    <div class="boot-text">Iniciando Windows XP...</div>
-                                    <div class="boot-bar">
-                                        <div class="boot-progress"></div>
-                                    </div>
-                                </div>
-                                <div class="title-content">
-                                    <h1 class="slide-title neon-text">OS INOVADORES</h1>
-                                    <h2 class="slide-subtitle">Capítulo 9: Software</h2>
-                                    <div class="slide-text">
-                                        <p><strong>A Revolução do Software Pessoal</strong></p>
-                                        <p class="slide-description">A gênese da indústria de software e a visão de Bill Gates e Paul Allen</p>
-                                    </div>
-                                    <div class="slide-icons">
-                                        <span class="icon pulse-icon">💾</span>
-                                        <span class="icon pulse-icon" style="animation-delay: 0.2s;">🖥️</span>
-                                        <span class="icon pulse-icon" style="animation-delay: 0.4s;">⌨️</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-2">
-                            <div class="slide-content">
-                                <h2 class="slide-title">GATES & ALLEN</h2>
-                                <h3 class="slide-subtitle">A Dupla Dinâmica</h3>
-                                <div class="slide-text">
-                                    <div class="dialog-box error-dialog">
-                                        <div class="error-header">⚠️ Diálogo de Sistema</div>
-                                        <p><strong>Paul Allen:</strong> "Ei, isto está acontecendo sem a gente"</p>
-                                        <p><strong>Bill Gates:</strong> "Não somos gurus de hardware, Paul. A gente entende é de software."</p>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li>Encontro em Lakeside School (1968)</li>
-                                        <li>Paixão pela programação e lógica</li>
-                                        <li>Visão: Software como principal valor</li>
-                                        <li>Estímulo: Altair 8800 (janeiro de 1975)</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-3">
-                            <div class="slide-content">
-                                <h2 class="slide-title">ALTAIR BASIC</h2>
-                                <h3 class="slide-subtitle">O Primeiro Passo</h3>
-                                <div class="slide-text">
-                                    <div class="code-block terminal-style">
-                                        <div class="terminal-header">C:\ALTAIR\> BASIC</div>
-                                        <p class="code-line"><span class="code-number">10</span> <span class="code-keyword">PRINT</span> <span class="code-string">"HELLO WORLD"</span></p>
-                                        <p class="code-line"><span class="code-number">20</span> <span class="code-keyword">GOTO</span> <span class="code-number">10</span></p>
-                                        <p class="code-line"><span class="code-number">30</span> <span class="code-keyword">END</span></p>
-                                        <p class="code-line" style="color: #00ff00;">RUN</p>
-                                        <p class="code-line" style="color: #ffff00;">HELLO WORLD</p>
-                                        <p class="code-line" style="color: #ffff00;">HELLO WORLD</p>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li><strong>BASIC:</strong> Beginner's All-Purpose Symbolic Instruction Code</li>
-                                        <li>Linguagem que democratizou a programação</li>
-                                        <li>Primeiro produto da Microsoft (Micro-Soft)</li>
-                                        <li>Criado em 8 semanas, sem ter o hardware Altair</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-4">
-                            <div class="slide-content">
-                                <h2 class="slide-title">O DEBATE</h2>
-                                <h3 class="slide-subtitle">Software é Livre?</h3>
-                                <div class="slide-text">
-                                    <div class="warning-box bsod-mini">
-                                        <div class="bsod-mini-header">⚠️ ERRO CRÍTICO DO SISTEMA</div>
-                                        <p><strong>A Carta Aberta de Bill Gates (1976)</strong></p>
-                                        <p style="font-size: 10px;">Crítica à pirataria de software</p>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li><strong>Gates:</strong> "Você roubou software?"</li>
-                                        <li><strong>Argumento:</strong> Custo e esforço precisam ser recompensados</li>
-                                        <li><strong>Contraponto:</strong> Movimento do "software livre" (Richard Stallman)</li>
-                                        <li><strong>Imperativo Moral:</strong> Compartilhar código e conhecimento</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-5">
-                            <div class="slide-content">
-                                <h2 class="slide-title">MS-DOS</h2>
-                                <h3 class="slide-subtitle">O Acordo com a IBM</h3>
-                                <div class="slide-text">
-                                    <div class="flow-diagram">
-                                        <div class="flow-box">
-                                            <div class="flow-icon">🏢</div>
-                                            <div>IBM</div>
-                                        </div>
-                                        <div class="flow-arrow">→</div>
-                                        <div class="flow-box">
-                                            <div class="flow-icon">💻</div>
-                                            <div>Microsoft</div>
-                                        </div>
-                                        <div class="flow-arrow">→</div>
-                                        <div class="flow-box">
-                                            <div class="flow-icon">🖥️</div>
-                                            <div>PC</div>
-                                        </div>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li>Fornecimento do SO para IBM PC (1981)</li>
-                                        <li>PC-DOS / MS-DOS: Base para proliferação</li>
-                                        <li>Estratégia genial: Licenciar para outros fabricantes</li>
-                                        <li>Resultado: Ubiquidade da Microsoft e domínio de mercado</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-6">
-                            <div class="slide-content">
-                                <h2 class="slide-title">GUI</h2>
-                                <h3 class="slide-subtitle">O Fim da Linha de Comando</h3>
-                                <div class="slide-text">
-                                    <div class="gui-comparison">
-                                        <div class="dos-screen">
-                                            <div class="cursor-blink">C:\> _</div>
-                                        </div>
-                                        <div class="gui-arrow">→</div>
-                                        <div class="gui-screen">
-                                            <div class="desktop-icon">
-                                                <div class="icon-img">📁</div>
-                                                <div class="icon-label">Meu PC</div>
-                                            </div>
-                                            <div class="desktop-icon">
-                                                <div class="icon-img">🖨️</div>
-                                                <div class="icon-label">Impressora</div>
-                                            </div>
-                                            <div class="desktop-icon">
-                                                <div class="icon-img">💾</div>
-                                                <div class="icon-label">Disquete</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li><strong>Xerox PARC (1970s):</strong> Berço da interface gráfica</li>
-                                        <li><strong>Apple Macintosh (1984):</strong> Popularização da GUI</li>
-                                        <li><strong>Microsoft Windows (1985+):</strong> Domínio no mercado de PCs</li>
-                                        <li>Mouse, ícones, janelas: Revolução na interação humano-computador</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-7">
-                            <div class="slide-content">
-                                <h2 class="slide-title">O LEGADO</h2>
-                                <h3 class="slide-subtitle">A Arquitetura da Informação</h3>
-                                <div class="slide-text">
-                                    <div class="legacy-box shutdown-screen">
-                                        <div class="shutdown-header">⏻ Desligando o Sistema...</div>
-                                        <p class="shutdown-text">C:\> SHUTDOWN /s /t 0</p>
-                                        <p class="shutdown-message">O software continua a ser executado...</p>
-                                    </div>
-                                    <ul class="slide-list">
-                                        <li>Software como motor da inovação tecnológica</li>
-                                        <li>Mais do que hardware, a experiência do usuário</li>
-                                        <li>Inovação contínua e cumulativa (standing on the shoulders of giants)</li>
-                                        <li>A internet, aplicativos e a era digital: tudo construído em software</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide" id="slide-8">
-                            <div class="slide-content bsod-final">
-                                <div class="bsod">
-                                    <div class="bsod-header">Um problema foi detectado e o Windows foi desligado para proteger seu computador.</div>
-                                    <div class="bsod-content">
-                                        <p style="font-size: 16px; font-weight: bold;">OBRIGADO PELA ATENÇÃO!</p>
-                                        <p style="margin-top: 20px;">Perguntas e Respostas</p>
-                                        <p class="reference" style="margin-top: 20px;">📚 Referência: Walter Isaacson - Os Inovadores</p>
-                                        <p class="reference" style="font-size: 9px; margin-top: 10px;">Capítulo 9: Software (páginas 324-385)</p>
-                                    </div>
-                                    <div class="bsod-footer">
-                                        <p>Pressione qualquer tecla para continuar...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="details-panel" id="detailsPanel">
-                        <div class="details-header">
-                            <h3 id="detailsTitle">Detalhes</h3>
-                            <button class="details-close" id="detailsCloseBtn">✕</button>
-                        </div>
-                        <div class="details-content" id="detailsContent">
-                            <p>Clique no botão "Detalhes" para ver mais informações sobre este slide.</p>
-                        </div>
-                    </div>
-                </div> <div class="slide-controls">
-                    <button class="nav-btn prev-btn" id="prevBtn">◄ Anterior</button>
-                    <button class="nav-btn details-btn" id="detailsBtn" title="Mostrar detalhes">📖 Detalhes</button>
-                    <div class="slide-counter">
-                        <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
-                    </div>
-                    <button class="nav-btn next-btn" id="nextBtn">Próximo ►</button>
+            <div class="details-content" id="detailsContent">
                 </div>
+        </div>
 
-                <div class="shortcuts-info">
-                    <p><small>⌨️ Setas (← →) ou Espaço para navegar | Números (1-8) para pular | D para detalhes | ESC para menus</small></p>
-                </div>
+        <div class="taskbar">
+            <button class="start-button xp-button" id="startBtn">
+                <img src="assets/windows-logo-start.png" alt="Start" class="start-logo">
+                Iniciar
+            </button>
+            <div class="taskbar-apps">
+                <button class="taskbar-app active" id="taskbarApp">
+                    <img src="assets/windows-xp-icon.png" alt="Presentation" class="app-icon">
+                    Os Inovadores
+                </button>
+            </div>
+            <div class="system-tray">
+                <img src="assets/sound-icon.png" alt="Sound" class="system-icon">
+                <img src="assets/network-icon.png" alt="Network" class="system-icon">
+                <span id="clock" class="clock"></span>
             </div>
         </div>
 
         <div class="start-menu" id="startMenu">
-            <div class="start-menu-user-header">
-                <img src="https://i.imgur.com/710AvsC.png" alt="User Avatar" class="start-menu-avatar"/>
-                <span class="start-menu-username">Apresentador</span>
+            <div class="start-menu-header">
+                <img src="assets/user-icon.png" alt="User" class="user-icon">
+                <span>Usuário</span>
             </div>
             <div class="start-menu-body">
                 <div class="start-menu-left">
-                    <ul class="start-menu-list">
-                        <li id="startMenuInternet">
-                            <img src="https://i.imgur.com/uHZGqtn.png" alt="Internet"/>
-                            <span>Internet</span>
-                        </li>
-                        <li id="startMenuEmail">
-                            <img src="https://i.imgur.com/SjR4s8S.png" alt="Email"/>
-                            <span>E-mail</span>
-                        </li>
-                    </ul>
-                    <hr class="start-menu-divider-left"/>
-                    <ul class="start-menu-list" id="startMenuAllPrograms">
-                        <li id="startMenuApp">
-                            <img src="https://i.imgur.com/8l6J0fT.png" alt="Apresentação"/>
-                            <span>Apresentação</span>
-                        </li>
-                        <li id="startMenuHelp">
-                            <img src="https://i.imgur.com/kSj9T0c.png" alt="Ajuda"/>
-                            <span>Ajuda e Suporte</span>
-                        </li>
-                        <li id="startMenuSearch">
-                            <img src="https://i.imgur.com/B1QkY1B.png" alt="Pesquisar"/>
-                            <span>Pesquisar</span>
-                        </li>
-                    </ul>
-                </div>
+                    <a href="#" class="start-menu-item" id="startMenuInternet">
+                        <img src="assets/internet-explorer.png" alt="Internet Explorer"> Internet Explorer
+                    </a>
+                    <a href="#" class="start-menu-item" id="startMenuEmail">
+                        <img src="assets/outlook-express.png" alt="Outlook Express"> Outlook Express
+                    </a>
+                    <div class="start-menu-separator"></div>
+                    <a href="#" class="start-menu-item" id="startMenuApp">
+                        <img src="assets/windows-xp-icon.png" alt="Presentation"> Os Inovadores
+                    </a>
+                    </div>
                 <div class="start-menu-right">
-                    <ul class="start-menu-list">
-                        <li id="startMenuMyDocs">
-                            <img src="https://i.imgur.com/6xkzXjD.png" alt="Documentos"/>
-                            <span>Meus Documentos</span>
-                        </li>
-                        <li id="startMenuMyPC">
-                            <img src="https://i.imgur.com/zWzX6Y7.png" alt="Meu PC"/>
-                            <span>Meu Computador</span>
-                        </li>
-                    </ul>
-                    <hr class="start-menu-divider-right"/>
-                    <ul class="start-menu-list">
-                        <li id="startMenuControlPanel">
-                            <img src="https://i.imgur.com/T0b6YLD.png" alt="Painel de Controle"/>
-                            <span>Painel de Controle</span>
-                        </li>
-                    </ul>
+                    <a href="#" class="start-menu-item" id="startMenuMyDocs">
+                        <img src="assets/my-documents.png" alt="Meus Documentos"> Meus Documentos
+                    </a>
+                    <a href="#" class="start-menu-item" id="startMenuMyPC">
+                        <img src="assets/my-computer.png" alt="Meu Computador"> Meu Computador
+                    </a>
+                    <a href="#" class="start-menu-item" id="startMenuControlPanel">
+                        <img src="assets/control-panel.png" alt="Painel de Controle"> Painel de Controle
+                    </a>
+                    <a href="#" class="start-menu-item" id="startMenuSearch">
+                        <img src="assets/search.png" alt="Pesquisar"> Pesquisar
+                    </a>
+                    <a href="#" class="start-menu-item" id="startMenuHelp">
+                        <img src="assets/help-support.png" alt="Ajuda e Suporte"> Ajuda e Suporte
+                    </a>
                 </div>
             </div>
             <div class="start-menu-footer">
-                <div class="start-menu-footer-btn" id="startMenuLogOff">
-                    <img src="https://i.imgur.com/2X8s11K.png" alt="Log Off"/>
-                    <span>Fazer Logoff</span>
-                </div>
-                <div class="start-menu-footer-btn" id="startMenuTurnOff">
-                    <img src="https://i.imgur.com/S5f21D5.png" alt="Desligar"/>
-                    <span>Desligar</span>
-                </div>
+                <button class="xp-button start-menu-footer-btn" id="startMenuTurnOff">
+                    <img src="assets/shutdown.png" alt="Desligar"> Desligar
+                </button>
             </div>
         </div>
 
         <div class="shutdown-dialog" id="shutdownDialog">
-            <div class="shutdown-window">
-                <div class="shutdown-title-bar">
-                    <span>Desligar o computador</span>
-                    <button class="shutdown-close" id="shutdownCloseBtn">✕</button>
-                </div>
-                <div class="shutdown-content">
-                    <div class="shutdown-btn" id="shutdownBtnStandby">
-                        <img src="https://i.imgur.com/J8Vq4xL.png" alt="Standby"/>
-                        <span>Espera</span>
-                    </div>
-                    <div class="shutdown-btn" id="shutdownBtnTurnOff">
-                        <img src="https://i.imgur.com/S5f21D5.png" alt="Desligar"/>
+            <div class="shutdown-title-bar">
+                <img src="assets/windows-xp-icon.png" alt="Windows" class="window-icon">
+                <span>Desligar o Windows</span>
+                <button class="shutdown-close-btn" id="shutdownCloseBtn">X</button>
+            </div>
+            <div class="shutdown-content">
+                <img src="assets/windows-logo-shutdown.png" alt="Windows Logo" class="shutdown-logo">
+                <p>O que você quer que o computador faça?</p>
+                <div class="shutdown-options">
+                    <div class="shutdown-option active">
+                        <img src="assets/turn-off-icon.png" alt="Desligar">
                         <span>Desligar</span>
                     </div>
-                    <div class="shutdown-btn" id="shutdownBtnRestart">
-                        <img src="https://i.imgur.com/j0f1L9Y.png" alt="Reiniciar"/>
-                        <span>Reiniciar</span>
                     </div>
+                <div class="shutdown-buttons">
+                    <button class="xp-button" id="shutdownBtnTurnOff">OK</button>
+                    <button class="xp-button" id="shutdownCancelBtn">Cancelar</button>
                 </div>
-                <div class="shutdown-footer">
-                    <button id="shutdownCancelBtn">Cancelar</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="desktop-icons">
-            <div class="desktop-shortcut">
-                <div class="shortcut-icon">🖥️</div>
-                <div class="shortcut-label">Meu PC</div>
-            </div>
-            <div class="desktop-shortcut">
-                <div class="shortcut-icon">📁</div>
-                <div class="shortcut-label">Meus Documentos</div>
-            </div>
-            <div class="desktop-shortcut">
-                <div class="shortcut-icon">🌐</div>
-                <div class="shortcut-label">Internet Explorer</div>
-            </div>
-            <div class="desktop-shortcut">
-                <div class="shortcut-icon">🗑️</div>
-                <div class="shortcut-label">Lixeira</div>
             </div>
         </div>
     </div>
@@ -376,3 +323,4 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+```http://googleusercontent.com/image_generation_content/0
