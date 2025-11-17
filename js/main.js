@@ -22,6 +22,7 @@ const detailsCloseBtn = document.getElementById('detailsCloseBtn');
 const detailsTitle = document.getElementById('detailsTitle');
 const detailsContent = document.getElementById('detailsContent');
 const taskbarApp = document.getElementById('taskbarApp');
+const imageOverlay = document.getElementById('imageOverlay'); // **NOVO**
 
 // --- NOVOS Elementos do Menu Iniciar e Desligar ---
 const shutdownDialog = document.getElementById('shutdownDialog');
@@ -113,6 +114,18 @@ function attachEventListeners() {
             handleDesktopShortcut(label);
         });
     });
+
+    // --- **NOVOS** Listeners para Expansão de Imagem ---
+    const slideImages = document.querySelectorAll('.slide-image');
+    slideImages.forEach(img => {
+        img.addEventListener('click', (e) => {
+            // Impede que o clique "vaze" para o overlay se a imagem já estiver expandida
+            e.stopPropagation(); 
+            toggleImageExpand(e.currentTarget);
+        });
+    });
+    // Adiciona listener no overlay para fechar
+    imageOverlay.addEventListener('click', closeImageExpand);
 }
 
 // Handle Keyboard Press
@@ -130,6 +143,10 @@ function handleKeyPress(event) {
             nextSlide();
             break;
         case 'escape':
+            // **NOVO** Fecha a imagem expandida se estiver aberta
+            if (imageOverlay.classList.contains('active')) {
+                closeImageExpand();
+            }
             if (startMenu.classList.contains('active')) {
                 startMenu.classList.remove('active');
             }
@@ -179,6 +196,7 @@ function goToSlide(slideNumber) {
 }
 function updateSlideDisplay() {
     isAnimating = true;
+    closeImageExpand(); // **NOVO** Garante que imagens fechem ao trocar de slide
     slides.forEach(slide => slide.classList.remove('active'));
     const activeSlide = document.getElementById(`slide-${currentSlide}`);
     if (activeSlide) activeSlide.classList.add('active');
@@ -257,8 +275,6 @@ function toggleWindowVisibility(forceShow = null) {
         
         // --- INÍCIO DA CORREÇÃO ---
         // Reseta a posição TOP e LEFT para os valores padrão de centralização
-        // Isso corrige o bug onde a janela reabre fora da tela
-        // se foi arrastada e depois fechada.
         mainWindow.style.top = '50%';
         mainWindow.style.left = '50%';
         // --- FIM DA CORREÇÃO ---
@@ -490,4 +506,43 @@ function logWelcomeMessage() {
     console.log('%c  • D - Alternar painel de detalhes', 'color: #000;');
     console.log('%c  • ESC - Fechar menus e diálogo de "Desligar"', 'color: #000;');
     console.log('%c\n🤫 Dica Secreta: Clique em Iniciar > Ajuda e Suporte...', 'color: #7F7F7F;');
+}
+
+
+// --- **NOVAS** FUNÇÕES PARA EXPANSÃO DE IMAGEM ---
+
+/**
+ * Alterna a expansão de uma imagem.
+ * Se a imagem clicada já estiver expandida, fecha.
+ * Se outra imagem estiver expandida, fecha a outra e abre esta.
+ * Se nenhuma estiver expandida, apenas abre esta.
+ */
+function toggleImageExpand(img) {
+    const currentlyExpanded = document.querySelector('.slide-image.expanded');
+
+    if (currentlyExpanded && currentlyExpanded === img) {
+        // Clicou na imagem que já estava expandida: fechar
+        img.classList.remove('expanded');
+        imageOverlay.classList.remove('active');
+    } else if (currentlyExpanded) {
+        // Clicou em uma imagem, mas outra estava expandida: trocar
+        currentlyExpanded.classList.remove('expanded');
+        img.classList.add('expanded');
+        imageOverlay.classList.add('active'); // Garante que o overlay continue
+    } else {
+        // Nenhuma imagem expandida: abrir esta
+        img.classList.add('expanded');
+        imageOverlay.classList.add('active');
+    }
+}
+
+/**
+ * Fecha qualquer imagem que esteja expandida.
+ */
+function closeImageExpand() {
+    const expandedImg = document.querySelector('.slide-image.expanded');
+    if (expandedImg) {
+        expandedImg.classList.remove('expanded');
+    }
+    imageOverlay.classList.remove('active');
 }
