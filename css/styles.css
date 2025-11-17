@@ -453,12 +453,11 @@
     * { animation: none !important; transition: none !important; }
 }
 
-/* --- NOVOS ESTILOS PARA IMAGENS INSERIDAS --- */
+/* --- ESTILOS PARA IMAGENS INSERIDAS (AJUSTADOS) --- */
 
 .slide-image {
-    max-width: 90%; /* Garante que a imagem não ultrapasse o slide */
-    /* A altura máxima foi ajustada para ser mais flexível em telas pequenas */
-    max-height: clamp(180px, 25vh, 250px); 
+    max-width: 70%; /* Reduz a largura máxima */
+    max-height: 150px; /* Reduz a altura máxima significativamente */
     object-fit: contain; /* Mantém a proporção da imagem */
     margin: 10px auto; /* Centraliza e dá espaço */
     display: block;
@@ -468,14 +467,15 @@
 }
 
 /* Ajustes de layout para slides com imagem */
-.slide-content .slide-title,
-.slide-content .slide-subtitle {
-    margin-bottom: 5px; /* Reduz a margem para caber a imagem */
+.slide-content .slide-title {
+    margin-bottom: 5px; 
 }
-
+.slide-content .slide-subtitle {
+    margin-bottom: 5px; 
+}
 .slide-content .slide-text,
 .slide-content .slide-list {
-    margin-top: 10px; /* Reduz a margem para caber a imagem */
+    margin-top: 10px; 
 }
 
 
@@ -484,19 +484,21 @@
      border: none;
      box-shadow: none;
      border-radius: 8px;
+     max-height: 120px; /* Ainda menor para o slide de título */
 }
 
 #slide-2 .slide-image {
     filter: grayscale(80%); /* Efeito P&B sutil para foto antiga */
+    max-height: 140px; /* Ajuste para esta imagem */
 }
 
 #slide-4 .slide-image {
-     max-height: clamp(180px, 25vh, 240px);
+     max-height: 140px; /* Ajuste para esta imagem */
 }
 
 #slide-5 .slide-image {
     background: #000; /* Fundo preto para o logo */
-    padding: 10px;
+    padding: 8px; /* Padding reduzido */
     border: 1px solid var(--xp-dark-gray);
-    max-height: clamp(150px, 20vh, 200px);
+    max-height: 120px; /* Ajuste para esta imagem */
 }
