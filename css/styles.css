@@ -453,8 +453,8 @@
     * { animation: none !important; transition: none !important; }
 }
 
-/* --- NOVOS ESTILOS PARA EXPANSÃO DE IMAGEM --- */
-
+/* --- NOVOS ESTILOS PARA EXPANSÃO DE IMAGEM (CORRIGIDOS) --- */
+        
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes zoomIn {
     from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
@@ -463,14 +463,12 @@
 
 /* O fundo escuro (overlay) */
 .image-overlay {
-    display: none; /* Escondido por padrão */
-    position: absolute; /* Cobre a área do slide (relativo ao .main-content-wrapper) */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    display: none; 
+    position: absolute; 
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.65);
-    z-index: 1000; /* Acima do slide, abaixo da imagem expandida */
+    z-index: 1000; 
     animation: fadeIn 0.2s ease-out;
     cursor: zoom-out;
 }
@@ -480,30 +478,32 @@
 
 /* 1. Imagem base (miniatura no slide) */
 .slide-image {
-    max-width: 60%; /* Um pouco maior que "muito pequeno" */
-    max-height: 160px; /* Um pouco maior que 150px */
+    max-width: 60%; 
+    max-height: 160px; 
     object-fit: contain;
-    margin: 8px auto; /* Margem menor */
+    margin: 8px auto; 
     display: block;
     border: 2px solid var(--xp-silver);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     border-radius: 4px;
-    cursor: zoom-in; /* Indica que é clicável */
-    transition: all 0.2s ease-out; /* Transição suave */
+    cursor: zoom-in; 
+    transition: all 0.2s ease-out; 
 }
 
-/* 2. Imagem expandida (quando clicada) */
+/* 2. Imagem expandida (CORRIGIDA - Tamanho maior) */
 .slide-image.expanded {
-    position: absolute; /* Relativo ao .main-content-wrapper */
+    position: absolute; 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1); /* Centraliza */
+    transform: translate(-50%, -50%) scale(1); 
     
-    /* O tamanho "médio" que você pediu (nem pequeno, nem gigante) */
-    max-width: 90%; 
-    max-height: 80%; 
+    /* ---- AQUI ESTÁ A CORREÇÃO (usando !important) ---- */
+    /* Isso força a imagem a obedecer este tamanho, ignorando as regras de #slide-2, etc. */
+    max-width: 80vw !important;  
+    max-height: 80vh !important; 
+    /* ------------------------------------------------ */
     
-    z-index: 1001; /* Acima do overlay */
+    z-index: 1001; 
     cursor: zoom-out;
     border: 3px solid var(--xp-white);
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
@@ -511,34 +511,31 @@
 }
 
 /* Ajustes de layout para slides com imagem */
-.slide-content .slide-title {
-    margin-bottom: 5px; 
-}
-.slide-content .slide-subtitle {
-    margin-bottom: 5px; 
-}
+.slide-content .slide-title { margin-bottom: 5px; }
+.slide-content .slide-subtitle { margin-bottom: 5px; }
 .slide-content .slide-text,
 .slide-content .slide-list {
-    margin-top: 8px; /* Margem menor para caber */
+    margin-top: 8px; 
 }
 
-/* Ajustes específicos (como antes) */
+/* --- AJUSTES ESPECÍFICOS (Tamanho base das miniaturas) --- */
+
 #slide-1 .slide-image {
+    max-height: 140px; 
     border: none;
     box-shadow: none;
     border-radius: 8px;
-    max-height: 140px; /* Tamanho base */
 }
 #slide-2 .slide-image {
+    max-height: 160px; 
     filter: grayscale(80%);
-    max-height: 160px; /* Tamanho base */
 }
 #slide-4 .slide-image {
-    max-height: 160px; /* Tamanho base */
+    max-height: 160px; 
 }
 #slide-5 .slide-image {
+    max-height: 140px; 
     background: #000;
     padding: 8px;
     border: 1px solid var(--xp-dark-gray);
-    max-height: 140px; /* Tamanho base */
 }
